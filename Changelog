@@ -1,3 +1,16 @@
+0.9 - 1.0alpha:
+* Core has been rewritten and simplified.
+* Dynamically loadable workers have been introduced. Currently:
+  - worker_single, processing all events in a single process
+  - worker_forking, processing all events in child processes (TODO)
+  - worker_example as sample worker
+* Rewritten rules parser for better performance and extensibility.
+* Simplified commands for rules for better extensibility.
+* Separated various parts of code for smaller binaries.
+* Removed Linux 2.4 interface -- nobody appears to be using it.
+* Rewritten hotplug2-modwrap.
+* Use getenv to lookup variables. Allows more complex rules.
+
 0.8 - 0.9:
 * Use signals to handle children.
 * Separate info and debugging output.

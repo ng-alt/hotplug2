@@ -1,7 +1,10 @@
 # vim:set sw=8 nosta:
 
-CFLAGS=-Os -DHAVE_RULES -Wall -g
-LDFLAGS=-g
+COPTS=-Os -Wall -g
+LDFLAGS=-g -ldl
+
+CFLAGS=$(COPTS)
+FPIC=-fPIC
 
 INSTALL=install -c -m 644
 INSTALL_BIN=install -c -m 755
@@ -10,7 +13,7 @@ INSTALL_BIN=install -c -m 755
 .PHONY: all clean dep install install-recursive clean-recursive \
 	dep-recursive all-recursive
 
-MAKEDEP=-gcc $(CFLAGS) -MM $(wildcard *.c *.cc) > .depend
+MAKEDEP=-$(CC) $(CFLAGS) -MM $(wildcard *.c *.cc) > .depend
 dep: dep-recursive
 	$(MAKEDEP)
 .depend:
@@ -32,3 +35,8 @@ all-recursive:
 install: all install-recursive
 install-recursive:
 	@for i in $(SUBDIRS); do $(MAKE) -C $$i install; done
+
+%.so: LDFLAGS += -shared -nostartfiles
+%.so: %.o
+	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
+
