@@ -73,7 +73,7 @@ struct token_t *lexer_read_token(struct lexer_ctx_t *ctx, struct buffer_t *buffe
 				if (c == '=') { status = 6; break; }
 				if (c == '~') { status = 7; break; }
 				if (c == '!') { status = 14; break; }
-				if (isupper(c)) { status = 2; break; }
+				if (isupper(c) || c == '_') { status = 2; break; }
 				if (isword(c)) { status = 5; break; }
 
 				token_set(token, buffer, TOKEN_ERROR);
@@ -91,7 +91,7 @@ struct token_t *lexer_read_token(struct lexer_ctx_t *ctx, struct buffer_t *buffe
 
 			/* ACTION... */
 			case 2:
-				if (isupper(c)) {
+				if (isupper(c) || c == '_') {
 					buffer_push(buffer, c);
 					break;
 				}

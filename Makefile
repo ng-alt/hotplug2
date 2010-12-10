@@ -28,6 +28,7 @@ DESTDIR=
 all: $(BINS)
 
 install:
+	$(INSTALL_BIN) -d $(DESTDIR)/sbin/
 	$(INSTALL_BIN) $(BINS) $(DESTDIR)/sbin/
 
 hotplug2: $(hotplug2-objs)

@@ -1,7 +1,5 @@
 #include "parser.h"
 
-#include <glob.h>
-
 /*
  * Grammar: 
  * input => directive // TOKEN_ROOTKW
@@ -399,14 +397,6 @@ static int parser_conditions(struct parser_ctx_t *ctx) {
 }
 
 /*
- * Report errors from globbing files in $include directive
- */
-static int parser_globerr(const char *path, int eerrno) {
-  fprintf(stderr, "Unable to include '%s': %s\n", path, strerror(eerrno));
-  return 0;
-}
-
-/*
  * directive => TOKEN_ROOTKW words-zero-or-more TOKEN_NEWLINE
  *
  * FIRST: TOKEN_ROOTKW
@@ -435,33 +425,10 @@ static int parser_directive(struct parser_ctx_t *ctx) {
 
 		token = token_queue_dequeue(&ctx->tokenqueue);
 		while (token != NULL) {
-      if (strchr(token->token, '*') || strchr(token->token, '?')) {
-        glob_t globbuf;
-        char **path;
- 
-        int ret = glob(token->token, GLOB_ERR, &parser_globerr, &globbuf);
-        if (ret != 0 && ret != GLOB_NOMATCH) {
-          globfree(&globbuf);
-          token_free(token);
-          return -1;
-        }
- 
-        for (path = globbuf.gl_pathv; *path; path++) {
-          if (parser_file(*path, ctx->ruleset)) {
-            fprintf(stderr, "Unable to include '%s'\n", *path);
-            globfree(&globbuf);
-            token_free(token);
-            return -1;
-          }
-        }
- 
-        globfree(&globbuf);
-      } else {
-        if (parser_file(token->token, ctx->ruleset)) {
-          fprintf(stderr, "Unable to include '%s'\n", token->token);
-          token_free(token);
-          return -1;
-        }
+			if (parser_file(token->token, ctx->ruleset)) {
+				fprintf(stderr, "Unable to include '%s'\n", token->token);
+				token_free(token);
+				return -1;
 			}
 			token_free(token);
 			token = token_queue_dequeue(&ctx->tokenqueue);
