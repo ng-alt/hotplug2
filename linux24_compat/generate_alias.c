@@ -148,7 +148,6 @@ void alias_from_pcimap(FILE *fp, char *prefix) {
 		PRINT_WILDCARD("sv", "%08lX", sub_vendor, 0xffffffff);
 		PRINT_WILDCARD("sd", "%08lX", sub_device, 0xffffffff);
 		
-		/* FIXME ! USE PRINT_WIL*/
 		PRINT_WILDCARD_COND("bc", "%02X", 
 		(unsigned int)((class_type & 0x00ff0000 & class_mask) >> 16),
 		class_mask & 0x00ff0000);

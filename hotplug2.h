@@ -14,7 +14,8 @@
  * Various compatibility definitions.
  */
 #ifndef SO_RCVBUFFORCE
-#if defined(__alpha__) || defined(__hppa__) || defined(__sparc__) || defined(__sparc_v9__)
+#if defined(__alpha__) || defined(__hppa__) || defined(__sparc__) || \
+	defined(__sparc_v9__)
 #define SO_RCVBUFFORCE 			0x100b
 #else
 #define SO_RCVBUFFORCE			33
@@ -22,7 +23,8 @@
 #endif
 
 #ifndef SO_SNDBUFFORCE
-#if defined(__alpha__) || defined(__hppa__) || defined(__sparc__) || defined(__sparc_v9__)
+#if defined(__alpha__) || defined(__hppa__) || defined(__sparc__) || \
+	defined(__sparc_v9__)
 #define SO_SNDBUFFORCE 			0x100a
 #else
 #define SO_SNDBUFFORCE			32
@@ -86,4 +88,3 @@ struct options_t {
 char *get_hotplug2_value_by_key(struct hotplug2_event_t *, char *);
 
 #endif /* ifndef HOTPLUG2_H */
-

@@ -1,10 +1,12 @@
 # vim:set sw=8 nosta:
 
+PREFIX=
 CFLAGS=-Os -DHAVE_RULES -Wall -g
 LDFLAGS=-g
 
 INSTALL=install -c -m 644
 INSTALL_BIN=install -c -m 755
+INSTALL_DIR=install -d
 
 
 .PHONY: all clean dep install install-recursive clean-recursive \

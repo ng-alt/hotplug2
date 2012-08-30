@@ -7,15 +7,8 @@ SUBDIRS=
 all:
 
 install:
-	case "`uname -r`" in \
-		2.6.*) \
-		$(INSTALL) hotplug2.rules-2.6kernel /etc/hotplug2.rules \
-		;; \
-		*) \
-		$(INSTALL) hotplug2.rules-2.4kernel /etc/hotplug2.rules \
-		;; \
-	esac
-
+	$(INSTALL_DIR) $(PREFIX)/hotplug2/etc
+	$(INSTALL) hotplug2.rules-2.6kernel $(PREFIX)/hotplug2/etc/hotplug2.rules
 
 include ../common.mak
 MAKEDEP:=

@@ -83,4 +83,3 @@ struct hotplug2_child_t *remove_child_by_pid(struct hotplug2_child_t *child, pid
 	free(child);
 	return tmp_child;
 }
-
