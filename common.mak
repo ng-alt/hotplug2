@@ -1,16 +1,17 @@
 # vim:set sw=8 nosta:
 
-CFLAGS=-Os -DHAVE_RULES -Wall -g
+CFLAGS=-Os -DHAVE_RULES -Wall -g -Wextra $(EXTRACFLAGS)
 LDFLAGS=-g
 
 INSTALL=install -c -m 644
 INSTALL_BIN=install -c -m 755
+INSTALL_DIR=install -d
 
 
 .PHONY: all clean dep install install-recursive clean-recursive \
 	dep-recursive all-recursive
 
-MAKEDEP=-gcc $(CFLAGS) -MM $(wildcard *.c *.cc) > .depend
+MAKEDEP=-$(CC) $(CFLAGS) -MM $(wildcard *.c *.cc) > .depend
 dep: dep-recursive
 	$(MAKEDEP)
 .depend:
